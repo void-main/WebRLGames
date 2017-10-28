@@ -7,8 +7,14 @@
 		var ret = 0
 		var reward = 0
 		var state = 'left'
+		var actionCount = 10
 
 		function on_left () {
+			if (actionCount <= 0) {
+				return;
+			}
+
+			actionCount --;
 			if (state === 'left') {
 				reward = 10;
 				ret += reward;
@@ -23,6 +29,11 @@
 		}
 
 		function on_right() {
+			if (actionCount <= 0) {
+				return;
+			}
+
+			actionCount --;
 			if (state === 'left') {
 				reward = -50;
 				ret += reward;
@@ -37,6 +48,7 @@
 		}
 
 		function update_ui () {
+			document.getElementById("action_count").innerHTML = actionCount;
 			document.getElementById("return").innerHTML = ret;
 			document.getElementById("reward").innerHTML = reward;
 			document.getElementById("state").innerHTML = state === 'left' ? '左边' : '右边';
@@ -45,7 +57,10 @@
 		</script>
 		<div>
 			非常无聊的RL游戏，你能做2个动作：左移和右移，每次移动后，系统会告诉你当前所处的状态（只有2个状态：左边和右边），同时会给你的动作一个奖励分数。请以最近10次操作尽量多的获得奖励分数为目标，试着找到一种移动策略吧！
-		</div>	
+		</div>
+		<div>
+			剩余操作次数：<span id="action_count">10</span>
+		</div>
 		<div>
 			总奖励分数：<span id="return">0</span>
 		</div>
